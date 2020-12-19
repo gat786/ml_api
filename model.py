@@ -1,4 +1,4 @@
-from PIL.Image import Image
+from PIL import Image
 import numpy as np
 import tensorflow as tf
 import requests
@@ -11,10 +11,6 @@ from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import Model
 from tensorflow.keras.applications import imagenet_utils
 from sklearn.metrics import confusion_matrix
-import itertools
-import os
-import shutil
-import random
 import matplotlib.pyplot as plt
 from io import BytesIO
 
@@ -31,7 +27,7 @@ class MobileNetImplementation:
     def pil_from_url(self,url):
         response = requests.get(url)
         image = Image.open(BytesIO(response.content))
-        image.resize(224,224)
+        image = image.resize([224,224])
         return image
     
     def predict_image(self,url):
@@ -39,4 +35,11 @@ class MobileNetImplementation:
         processed_image = self.prepare_image(image)
         predictions = self.mobile.predict(processed_image)
         results = imagenet_utils.decode_predictions(predictions)
-        return results
+        return_dict = []
+        for prediction in results[0]:
+            prediction_data = {
+                "confidence": float(prediction[2]),
+                "found_item": prediction[1]
+            }
+            return_dict.append(prediction_data)
+        return {"result":return_dict}

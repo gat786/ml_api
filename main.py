@@ -1,6 +1,7 @@
 from typing import Optional
 
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
 from model import MobileNetImplementation
@@ -16,5 +17,6 @@ def read_root():
 
 @app.put("/predict")
 def predict(content:RequestBody):
-    
-    return {"result": "unprepared"}
+    model = MobileNetImplementation()
+    result = model.predict_image(content.url)
+    return JSONResponse(content=result)
