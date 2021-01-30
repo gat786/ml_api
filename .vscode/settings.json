@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/home/gat786/.virtualenvs/ml_api-GEwIfviV/bin/python",
+    "python.pythonPath": "C:\\Users\\gat78\\.virtualenvs\\api-2Gd2tY8j\\Scripts\\python.exe",
     "appService.zipIgnorePattern": [
         "__pycache__{,/**}",
         "*.py[cod]",
