@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from model import MobileNetImplementation
+from .model import MobileNetImplementation
 
 class RequestBody(BaseModel):
     url:str
