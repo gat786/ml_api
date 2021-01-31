@@ -12,7 +12,12 @@ model = MobileNetImplementation()
 
 @app.get("/")
 def read_root():
-    return {"message":"hello worlds this is something to connect stuff"}
+    return {
+        "message" : "hello worlds this is something to connect stuff",
+        "how-to-use" : "Inorder to get an info on how to use this api go to /doc",
+        "built-info" : "this was built using FastAPI",
+        "author" : "https://github.com/gat786"
+    }
 
 @app.put("/predict")
 def predict(content:RequestBody):
