@@ -26,20 +26,24 @@ class MobileNetImplementation:
 
     def pil_from_url(self,url):
         response = requests.get(url)
-        image = Image.open(BytesIO(response.content))
-        image = image.resize([224,224])
-        return image
+        try:
+            image = Image.open(BytesIO(response.content))
+            image = image.resize([224,224])
+            return image
+        except:
+            return False
     
     def predict_image(self,url):
         image = self.pil_from_url(url)
-        processed_image = self.prepare_image(image)
-        predictions = self.mobile.predict(processed_image)
-        results = imagenet_utils.decode_predictions(predictions)
-        return_dict = []
-        for prediction in results[0]:
-            prediction_data = {
-                "confidence": float(prediction[2]),
-                "found_item": prediction[1]
-            }
-            return_dict.append(prediction_data)
-        return {"result":return_dict}
+        if image:
+            processed_image = self.prepare_image(image)
+            predictions = self.mobile.predict(processed_image)
+            results = imagenet_utils.decode_predictions(predictions)
+            return_dict = []
+            for prediction in results[0]:
+                prediction_data = {
+                    "confidence": float(prediction[2]),
+                    "found_item": prediction[1]
+                }
+                return_dict.append(prediction_data)
+            return {"result":return_dict}
